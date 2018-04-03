@@ -1,3 +1,5 @@
+const origin = __DEV__ ? 'http://10.1.10.63:8000/api' : 'https://www.silenyang.com/api';
+
 const Fetch = async (url, method = 'GET', data = {}) => {
     let sid = null;
     await $.storage.getItem('sid').then(id => {
