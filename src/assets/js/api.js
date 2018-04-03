@@ -1,34 +1,38 @@
-import axios from 'axios';
-
-axios.interceptors.request.use(
-    config => {
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-    }
-);
-axios.interceptors.response.use(
-    data => {
-        const { status, msg } = data.data;
-        if (status !== 200) console.log(msg);
-        return data;
-    },
-    error => {
-        console.log('error', error.message);
-        return Promise.reject(error);
-    }
-);
-
-const origin = 'https://localhost:3000';
-
-const Query = (url, type = 'get', data = {}) => {
-    if (type === 'get') return axios.get(url).then(response => response.data);
-    if (type === 'post') return axios.post(url, data).then(response => response.data);
+const Fetch = async (url, method = 'GET', data = {}) => {
+    let sid = null;
+    await $.storage.getItem('sid').then(id => {
+        sid = id || '';
+    });
+    const options = {
+        method,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            sid
+        }
+    };
+    console.log(origin + url);
+    return fetch(
+        `${origin}${url}`,
+        method !== 'POST' ? options : Object.assign(options, { body: JSON.stringify(data) })
+    ).then(res => {
+        const sid = res.headers.map.sid && res.headers.map.sid[0];
+        $.storage.setItem('sid', sid);
+        return res.json();
+    });
 };
 
 export default {
-    login: (userName, password) => {
-        return Query(`https://facebook.github.io/react-native/movies.json`);
+    login: () => {
+        return Fetch(`/login`, 'POST', {
+            code: '123456',
+            fakeId: 123456
+        });
+    },
+    giftGift: id => {
+        return Fetch(`/gift/${id}`);
+    },
+    giftList: (page = 1) => {
+        return Fetch(`/gifts/${page}`);
     }
 };

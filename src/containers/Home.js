@@ -1,31 +1,27 @@
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TouchableOpacity,
-    AsyncStorage,
-    ToastAndroid
-} from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import api from '../assets/js/api';
+import commonCSS from '../assets/js/commonCss';
+import user from '../actions/User';
 
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            top3gifts: []
+        };
     }
 
     render() {
+        const { user } = this.props;
         return (
-            <View style={styles.container}>
-                <Image
-                    source={require('../assets/images/index_main.png')}
-                    style={[{ width: 750, height: 580 }]}
-                />
-                {/* <EnergyBox /> */}
-            </View>
+            <ScrollView style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    <Text>Home</Text>
+                </View>
+            </ScrollView>
         );
     }
 }
@@ -33,9 +29,15 @@ class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        backgroundColor: '#F5FCFF'
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        position: 'relative'
     }
 });
 
-export default connect(state => ({}), dispatch => ({}))(Home);
+export default connect(
+    state => ({ user: state.user }),
+    dispatch => ({
+        updateUser: bindActionCreators(user.update, dispatch)
+    })
+)(Home);

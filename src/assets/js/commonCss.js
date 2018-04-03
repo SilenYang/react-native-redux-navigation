@@ -1,18 +1,26 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    flexHorizontal: {
-        flexDirection: 'row'
-    },
-    flexItem: {
-        flex: 1,
+    flexBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
     },
-    flex1: {
-        flex: 1
+    autoFlexBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
     },
-    flex2: {
-        flex: 2
+    centerBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    tinyIcon: {
+        width: 8,
+        height: 10
     }
 });
 

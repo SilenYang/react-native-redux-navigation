@@ -5,10 +5,8 @@ import store from './store';
 import AppWithNavigationState from './AppWithNavigationState';
 import Home from './containers/Home';
 
-// const store = createStore();
 export default class ReactNativeReduxNavigation extends Component {
     render() {
-        // return <Home />;
         return (
             <Provider store={store}>
                 <AppWithNavigationState />

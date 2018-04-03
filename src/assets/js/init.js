@@ -1,6 +1,8 @@
+import storage from './storage';
+
 const init = () => {
     global.$ = {
-        axios: 'axios'
+        storage
     };
 };
 
